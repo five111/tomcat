@@ -916,6 +916,9 @@ public class Http11Processor extends AbstractProcessor {
             if (http11 && entityBody && !connectionClosePresent) {
                 outputBuffer.addActiveFilter(outputFilters[Constants.CHUNKED_FILTER]);
                 contentDelimitation = true;
+                if (headers.getHeader(Constants.TRANSFERENCODING) == null) {
+                    headers.addValue(Constants.TRANSFERENCODING).setString(Constants.CHUNKED);
+                }
                 headers.addValue(Constants.TRANSFERENCODING).setString(Constants.CHUNKED);
             } else {
                 outputBuffer.addActiveFilter(outputFilters[Constants.IDENTITY_FILTER]);
